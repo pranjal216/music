@@ -1,0 +1,22 @@
+<img src="{{album.album_logo}}" >
+
+<h1>{{album.album_title}}</h1>
+<h3>{{album.artist}}</h3>
+
+<!--{% if error_message %}
+    <p><strong> {{error message }}</strong></p>
+{% endif%}-->
+
+<form action="{% url 'music:favourite' Album.id %}" method="post">
+    {% csrf token %}
+    {% for song in Album.song_set.all %}
+        <input type="radio" id="song{{forloop.counter}}" name="song" value="{{song.id}}">
+        <label for="song{{forloop.counter}}">
+            {{ song.song_title }}
+            {% if song.is_favourite %}
+                <img src="https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.iconspng.com%2Fuploads%2Fremix-of-star-by-artokem%2Fremix-of-star-by-artokem.png&imgrefurl=https%3A%2F%2Fwww.iconspng.com%2Fimage%2F64049%2Fremix-of-star-by-artokem&docid=Gn0KWkduLiN4aM&tbnid=t1GjwUERjTrZuM%3A&vet=10ahUKEwj2p_fjra_bAhWPeysKHenHCwAQMwj_ASgHMAc..i&w=2400&h=2284&bih=658&biw=1294&q=star&ved=0ahUKEwj2p_fjra_bAhWPeysKHenHCwAQMwj_ASgHMAc&iact=mrc&uact=8">
+            {% endif %}
+        </label><br>
+    {% endfor %}
+    <input type="submit" value="favourite">
+</form>
